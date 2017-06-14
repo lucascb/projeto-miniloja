@@ -1,6 +1,5 @@
-1 arroz 10.99
 2 feijao 7.34
 3 cafe 6.8
 4 coxinha 0.99
 5 sorriso 0.01
-6 leandro 1.0
+7 bacala 10.0

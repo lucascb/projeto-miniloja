@@ -38,22 +38,22 @@ public class DaoLoja {
     public void addProduto(String desc, double preco) {
         count++;
         this.shop.addProduto(new Produto(count, desc, preco));
-        // Escreve os produtos no arquivo
-        try (BufferedWriter bw = Files.newBufferedWriter(file, StandardOpenOption.WRITE)) {
-            shop.getProdutos().forEach(prod -> {
-                try {
-                    bw.write(prod.getId() + " " 
-                            + prod.getDescription() + " " 
-                            + prod.getPrice() + "\n");    
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+        save();
+    }
+    
+    public void removeProduto(int id) {
+        for (Produto prod : this.shop.getProdutos()) {
+            if (prod.getId() == id) {
+                this.shop.removeProduto(prod);
+                save();
+                for (Produto p : shop.getProdutos())
+                    System.out.println(p);
+                return;
+            }
         }
     }
     
+    // Parseia uma string e devolve uma loja
     private Loja parseFile(Stream<String> file) {
         Loja loja = new Loja();
         
@@ -65,6 +65,27 @@ public class DaoLoja {
         });
         
         return loja;
+    }
+    
+    // Persiste a loja no arquivo
+    private void save() {
+        try (BufferedWriter bw = Files.newBufferedWriter(
+                file, 
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING)
+            ) {
+            this.shop.getProdutos().forEach(prod -> {
+                try {
+                    bw.write(prod.getId() + " " 
+                            + prod.getDescription() + " " 
+                            + prod.getPrice() + "\n");    
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
 }

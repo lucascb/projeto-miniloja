@@ -17,7 +17,6 @@ import models.Carrinho;
 import models.DaoLoja;
 import models.Loja;
 import models.Pessoa;
-import views.CarrinhoView;
 
 /**
  *
@@ -27,7 +26,6 @@ import views.CarrinhoView;
 public class ComprasServlet extends HttpServlet {
     private Carrinho cart;
     private DaoLoja shop;
-    private String user;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,39 +33,35 @@ public class ComprasServlet extends HttpServlet {
         cart = (Carrinho) request.getSession().getAttribute("carrinho");
         shop = new DaoLoja();
         
-        for (Cookie c : request.getCookies()) {
-            if (c.getName().equals("email")) {
-                user = c.getValue();
-            }
-        }
-       
-        if (user == null) {
-            user = request.getParameter("email");
-            Cookie c = new Cookie("email", user);
-            c.setMaxAge(1000 * 24 * 3600 * 30); // 30 dias
-            response.addCookie(c);
-        }
-        
         if (cart == null) {
-            cart = new Carrinho(user);
+            cart = new Carrinho();
             request.getSession().setAttribute("carrinho", cart);
         }
         
-        String operacao = request.getParameter("op");
-        if (request.getParameter("id") != null) {
-            if (operacao.equals("add")) {
-                int pid = Integer.parseInt(request.getParameter("id"));
+        String comprar = request.getParameter("botaoComprar");
+        // Usuario clicou para comprar algum item
+        if (comprar != null) {
+            String id = request.getParameter("idComprarProd");
+            if (id != null) {
+                int pid = Integer.parseInt(id);
+                //System.out.println("Adicionado: " + pid);
                 cart.addProduto(shop.getLoja().getProduto(pid));
-            } else if (operacao.equals("del")) {
-                int pid = Integer.parseInt(request.getParameter("id"));
+            }
+        }
+        
+        String remover = request.getParameter("botaoRemover");
+        // Usuario clicou para remover algum item do carrinho
+        if (remover != null) {
+            String id = request.getParameter("idRemoverProd");
+            if (id != null) {
+                int pid = Integer.parseInt(id);
+                //System.out.println("Removido: " + pid);
                 cart.removeProduto(pid);
             }
         }
         
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println(CarrinhoView.mostrarCarrinho(shop.getLoja(), cart));
-        }
+        // Redireciona para o carrinho
+        request.getRequestDispatcher("carrinho.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

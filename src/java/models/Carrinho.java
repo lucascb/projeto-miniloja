@@ -5,6 +5,7 @@
  */
 package models;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,8 @@ import java.util.List;
  */
 public class Carrinho {
     private String cliente;
-    private List<Produto> produtos = new ArrayList<>();
+    private List<ItemCarrinho> itens = new ArrayList<>();
+    private int count = 0;
 
     public Carrinho() {}
     
@@ -31,22 +33,37 @@ public class Carrinho {
     }
 
     public void addProduto(Produto p) {
-        this.produtos.add(p);
+        this.itens.add(new ItemCarrinho(count, p));
+        count++;
     }
     
     public boolean removeProduto(int id) {
-        return produtos.removeIf(prod -> prod.getId() == id);
+        return itens.removeIf(item -> item.getId() == id);
     }
     
     public Produto getProduto(int id) {
-        for (Produto p : produtos) {
+        for (ItemCarrinho p : this.itens) {
             if (p.getId() == id)
-                return p;
+                return p.getProduto();
         }
         return null;
     }
     
-    public List<Produto> getProdutos() {
-        return this.produtos;
+    public List<ItemCarrinho> getItens() {
+        return this.itens;
+    }
+    
+    public double getPrecoTotal() {
+        double total = 0;
+        
+        for (ItemCarrinho i : this.itens) {
+            total += i.getProduto().getPrice();
+        }
+        return total;
+    }
+    
+    @Override
+    public String toString() {
+        return "carrinho(" + this.cliente + ")";
     }
 }

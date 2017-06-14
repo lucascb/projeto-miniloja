@@ -43,4 +43,22 @@ public class Produto {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    /*
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Produto) {
+            return ((Produto) o).getId() == this.getId();
+        }
+        return super.equals(o);
+    }
+    //*/
+
+    @Override
+    public String toString() {
+        return "produto(" + id + ", " + description + ", " + price + ")";
+    }
+    
+    
+    
 }

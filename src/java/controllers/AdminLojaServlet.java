@@ -19,7 +19,6 @@ import models.DaoLoja;
 import models.Loja;
 import models.Pessoa;
 import models.Produto;
-import views.LojaView;
 
 /**
  *
@@ -29,31 +28,34 @@ import views.LojaView;
 public class AdminLojaServlet extends HttpServlet {
     private DaoLoja shop;
     
-    @Override
-    public void init() throws ServletException { 
-        if (shop == null) {
-            try {
-                shop = new DaoLoja();
-            } catch (IOException ex) {
-                Logger.getLogger(AdminLojaServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if (request.getParameter("description") != null) {
-            String desc = request.getParameter("description");
-            double price = Double.parseDouble(request.getParameter("price"));
-        
-            this.shop.addProduto(desc, price);
+        // Carrega os produtos da loja
+        if (shop == null) {
+            shop = new DaoLoja();
         }
         
-        response.setContentType("text/html;charset=UTF-8");      
-        try (PrintWriter out = response.getWriter()) {
-            out.print(LojaView.mostrarProdutos(this.shop.getLoja()));
+        // Adiciona o produto
+        String desc = request.getParameter("description");
+        String price = request.getParameter("price");
+        if (desc != null && price != null) {
+            this.shop.addProduto(desc, Double.parseDouble(price));
         }
+        
+        // Remove um produto
+        String remover = request.getParameter("botaoRemover");
+        if (remover != null) {
+            System.out.println(remover);
+            String id = request.getParameter("idRemoverProd");
+            if (id != null) {
+                System.out.println("Produto removido: " + id);
+                int pid = Integer.parseInt(id);
+                this.shop.removeProduto(pid);
+            }
+        }
+        
+        // Redireciona para a loja
+        request.getRequestDispatcher("loja.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

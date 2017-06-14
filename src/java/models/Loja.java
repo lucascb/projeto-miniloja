@@ -36,4 +36,8 @@ public class Loja {
         return p;
     }
     
+    public void removeProduto(Produto p) {
+        this.produtos.remove(p);
+    }
+    
 }
