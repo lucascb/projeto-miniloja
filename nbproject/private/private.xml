@@ -5,12 +5,13 @@
         <group>
             <file>file:/home/lucas/Documents/ufu/miniloja/src/java/models/DaoLoja.java</file>
             <file>file:/home/lucas/Documents/ufu/miniloja/src/java/models/Loja.java</file>
+            <file>file:/home/lucas/Documents/ufu/miniloja/src/java/models/ItemCarrinho.java</file>
             <file>file:/home/lucas/Documents/ufu/miniloja/src/java/controllers/AdminLojaServlet.java</file>
-            <file>file:/home/lucas/Documents/ufu/miniloja/src/java/views/LojaView.java</file>
             <file>file:/home/lucas/Documents/ufu/miniloja/src/java/models/Carrinho.java</file>
-            <file>file:/home/lucas/Documents/ufu/miniloja/src/java/views/CarrinhoView.java</file>
-            <file>file:/home/lucas/Documents/ufu/miniloja/src/java/models/Pessoa.java</file>
+            <file>file:/home/lucas/Documents/ufu/miniloja/web/carrinho.jsp</file>
+            <file>file:/home/lucas/Documents/ufu/miniloja/web/loja.jsp</file>
             <file>file:/home/lucas/Documents/ufu/miniloja/src/java/controllers/ComprasServlet.java</file>
+            <file>file:/home/lucas/Documents/ufu/miniloja/src/java/models/Produto.java</file>
             <file>file:/home/lucas/Documents/ufu/miniloja/web/index.html</file>
         </group>
     </open-files>

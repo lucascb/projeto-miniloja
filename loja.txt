@@ -1,5 +1,5 @@
-2 feijao 7.34
-3 cafe 6.8
-4 coxinha 0.99
-5 sorriso 0.01
-7 bacala 10.0
+feijao 7.34
+cafe 6.8
+coxinha 0.99
+sorriso 0.01
+bacala 9.99

@@ -20,11 +20,10 @@ import java.util.stream.Stream;
 public class DaoLoja {
     private final Path file = Paths.get("/home/lucas/Documents/ufu/miniloja/loja.txt");
     private Loja shop;
-    private int count;
+    private int count = 0;
 
     public DaoLoja() throws IOException {
         this.shop = parseFile(Files.lines(file));
-        this.count = shop.getProdutos().size();
     }
 
     public Loja getLoja() {
@@ -36,8 +35,8 @@ public class DaoLoja {
     }
     
     public void addProduto(String desc, double preco) {
-        count++;
         this.shop.addProduto(new Produto(count, desc, preco));
+        count++;
         save();
     }
     
@@ -46,8 +45,6 @@ public class DaoLoja {
             if (prod.getId() == id) {
                 this.shop.removeProduto(prod);
                 save();
-                for (Produto p : shop.getProdutos())
-                    System.out.println(p);
                 return;
             }
         }
@@ -56,12 +53,13 @@ public class DaoLoja {
     // Parseia uma string e devolve uma loja
     private Loja parseFile(Stream<String> file) {
         Loja loja = new Loja();
+        count = 0;
         
         file.forEach(line -> {
             String[] values = line.split(" ");
-            loja.addProduto(new Produto(Integer.parseInt(values[0]),
-                                        values[1],
-                                        Double.parseDouble(values[2])));
+            Produto p = new Produto(count, values[0], Double.parseDouble(values[1]));
+            loja.addProduto(p);
+            count++;
         });
         
         return loja;
@@ -72,12 +70,11 @@ public class DaoLoja {
         try (BufferedWriter bw = Files.newBufferedWriter(
                 file, 
                 StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING)
-            ) {
+                StandardOpenOption.TRUNCATE_EXISTING)) {
+            
             this.shop.getProdutos().forEach(prod -> {
                 try {
-                    bw.write(prod.getId() + " " 
-                            + prod.getDescription() + " " 
+                    bw.write(prod.getDescription() + " " 
                             + prod.getPrice() + "\n");    
                 } catch (IOException e) {
                     e.printStackTrace();

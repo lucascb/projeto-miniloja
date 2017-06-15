@@ -31,7 +31,7 @@
                 <td align="center"><%= prod.getPrice() %></td>
                 <td align="center">
                     <form action="/miniloja/admin" method="POST">
-                        <input type="submit" value="-" name="botaoRemover" />
+                        <input type="submit" value="x" name="botaoRemover" />
                         <input type="hidden" value="<%= prod.getId() %>" name="idRemoverProd" />
                     </form>
                 </td>
@@ -49,8 +49,7 @@
             <input type="submit" value="Cadastrar" name="botaoCadastrar" />
         </form>
         <p/>
-        <form action="/miniloja/carrinho.jsp" method="GET">
-            <input type="submit" value="Ir para Carrinho" />
-        </form>
+        <a href="carrinho.jsp">Ir para Carrinho</a><br/>
+        <a href="index.html">Voltar para Página Inicial</a>
     </body>
 </html>

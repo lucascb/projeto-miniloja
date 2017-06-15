@@ -18,9 +18,7 @@
     </head>
     <body>
         <h1>Seja bem-vindo!</h1>
-        <form action="/miniloja/loja.jsp" method="GET">
-            <input type="submit" value="Gerenciar loja" name="botaoLoja" />
-        </form>
+        <a href="loja.jsp">Gerenciar loja</a>
         <%-- Carrega as informacoes da loja e do carrinho --%>
         <%  
             Loja loja = new DaoLoja().getLoja();
@@ -64,13 +62,14 @@
                     <td align="center"><%= item.getProduto().getPrice() %></td>
                     <td align="center">
                         <form action="/miniloja/comprar" method="POST">
-                            <input type="submit" value="-" name="botaoRemover" />
+                            <input type="submit" value="x" name="botaoRemover" />
                             <input type="hidden" value="<%= item.getId() %>" name="idRemoverProd" />
                         </form>
                     </td>
                 </tr>
             <% } %>
         </table>
-            <p><b>Subtotal:</b> R$ <%= carr.getPrecoTotal() %></p>
+        <p><b>Subtotal:</b> R$ <%= carr.getPrecoTotal() %></p>
+        <a href="index.html">Voltar para a Página Inicial</a>
     </body>
 </html>
